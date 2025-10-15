@@ -9,6 +9,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+
 df = pd.read_csv("data.csv")
 
 gender_map = {1: "Female", 2: "Male"}
@@ -20,6 +21,7 @@ df["gender"] = df["gender"].map(gender_map)
 df["occupation"] = df["occupation"].map(occupation_map)
 df["work_mode"] = df["work_mode"].map(work_mode_map)
 df["sleep_quality_1_5"] = df["sleep_quality_1_5"].map(sleep_quality_map)
+
 
 df["screen_time_hours"] = df["screen_time_hours"].round(2)
 df["sleep_hours"] = df["sleep_hours"].round(2)
@@ -50,7 +52,6 @@ kpi5.metric("Avg Total Screen Time", f"{avg_total_screen:.2f} hrs")
 
 st.markdown("---")
 
-
 fig1 = px.bar(
     df.groupby("occupation", as_index=False)["sleep_hours"].mean(),
     x="occupation",
@@ -59,6 +60,18 @@ fig1 = px.bar(
     title="Average Sleeping Hours by Occupation",
     text_auto=".2f"
 )
+fig1.update_layout(
+    plot_bgcolor="rgba(0,0,0,0)",
+    paper_bgcolor="rgba(0,0,0,0)",
+    margin=dict(l=20, r=20, t=40, b=20),
+    title_font=dict(size=18, color="white"),
+    font=dict(color="white"),
+    xaxis=dict(showline=True, linecolor="white", zeroline=False),
+    yaxis=dict(showline=True, linecolor="white", zeroline=False),
+    showlegend=False
+)
+fig1.update_traces(marker_line_color="white", marker_line_width=1.5)
+
 
 fig2 = px.bar(
     df.groupby("work_mode", as_index=False)["sleep_hours"].mean(),
@@ -68,6 +81,17 @@ fig2 = px.bar(
     title="Average Sleeping Hours by Work Mode",
     text_auto=".2f"
 )
+fig2.update_layout(
+    plot_bgcolor="rgba(0,0,0,0)",
+    paper_bgcolor="rgba(0,0,0,0)",
+    margin=dict(l=20, r=20, t=40, b=20),
+    title_font=dict(size=18, color="white"),
+    font=dict(color="white"),
+    xaxis=dict(showline=True, linecolor="white", zeroline=False),
+    yaxis=dict(showline=True, linecolor="white", zeroline=False),
+    showlegend=False
+)
+fig2.update_traces(marker_line_color="white", marker_line_width=1.5)
 
 fig3 = px.box(
     df,
@@ -77,6 +101,16 @@ fig3 = px.box(
     title="Screen Time Distribution by Sleep Quality",
 )
 fig3.update_traces(hovertemplate="Sleep Quality: %{x}<br>Screen Time: %{y:.2f} hrs")
+fig3.update_layout(
+    plot_bgcolor="rgba(0,0,0,0)",
+    paper_bgcolor="rgba(0,0,0,0)",
+    margin=dict(l=20, r=20, t=40, b=20),
+    title_font=dict(size=18, color="white"),
+    font=dict(color="white"),
+    xaxis=dict(showline=True, linecolor="white", zeroline=False),
+    yaxis=dict(showline=True, linecolor="white", zeroline=False),
+)
+fig3.update_traces(marker_line_color="white", marker_line_width=1.5)
 
 fig4 = px.scatter(
     df,
@@ -94,7 +128,16 @@ fig4 = px.scatter(
     title="Screen Time vs Stress Level",
 )
 fig4.update_traces(hovertemplate="Screen Time: %{x:.2f} hrs<br>Stress Level: %{y:.2f}<br>Sleep Hours: %{marker.size:.2f}")
-
+fig4.update_layout(
+    plot_bgcolor="rgba(0,0,0,0)",
+    paper_bgcolor="rgba(0,0,0,0)",
+    margin=dict(l=20, r=20, t=40, b=20),
+    title_font=dict(size=18, color="white"),
+    font=dict(color="white"),
+    xaxis=dict(showline=True, linecolor="white", zeroline=False),
+    yaxis=dict(showline=True, linecolor="white", zeroline=False),
+)
+fig4.update_traces(marker_line_color="white", marker_line_width=1.5)
 
 col1, col2 = st.columns(2)
 with col1:
@@ -137,8 +180,6 @@ with col4:
         **In-person workers** sleep a little more, while **remote workers** sleep slightly less.
         """
     )
-
-
 
 st.markdown("---")
 st.subheader("📊 Overall Report Summary")
