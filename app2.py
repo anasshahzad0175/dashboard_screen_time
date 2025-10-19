@@ -35,9 +35,8 @@ for col in ["screen_time_hours", "sleep_hours", "stress_level_0_10", "work_scree
 
 avg_work_screen = df["work_screen_hours"].mean().round(2)
 avg_leisure_screen = df["leisure_screen_hours"].mean().round(2)
-avg_sleep_quality_score = df["sleep_quality_1_5"].replace(
-    {"Very Poor": 1, "Poor": 2, "Good": 3, "Excellent": 4}
-).mean().round(2)
+avg_sleep_quality_mode = df["sleep_quality_1_5"].mode()[0]
+
 avg_stress = df["stress_level_0_10"].mean().round(2)
 avg_total_screen = df["screen_time_hours"].mean().round(2)
 
@@ -87,8 +86,8 @@ kpi_files.append(create_kpi_card("Avg Work Screen Time", f"{avg_work_screen:.2f}
 kpi_files.append(create_kpi_card("Avg Leisure Screen Time", f"{avg_leisure_screen:.2f} hrs",
                                  "Entertainment & social", "tmp_charts/kpi2.png",
                                  (77,175,124), (161,225,188)))
-kpi_files.append(create_kpi_card("Avg Sleep Quality", f"{avg_sleep_quality_score:.2f}/4",
-                                 "Sleep quality rating", "tmp_charts/kpi3.png",
+kpi_files.append(create_kpi_card("Most Common Sleep Quality", avg_sleep_quality_mode,
+                                 "Most frequent sleep rating", "tmp_charts/kpi3.png",
                                  (255,163,72), (255,207,140)))
 kpi_files.append(create_kpi_card("Avg Stress Level", f"{avg_stress:.2f}/10",
                                  "Reported stress level", "tmp_charts/kpi4.png",
@@ -180,5 +179,5 @@ ws["A131"] = (
 ws["A131"].alignment = Alignment(wrap_text=True)
 
 
-wb.save("Dashboard.xlsx")
+wb.save("new_Dashboard.xlsx")
 print("✅ Premium Excel dashboard saved as 'Lifestyle_Premium_Light_Dashboard.xlsx'")
